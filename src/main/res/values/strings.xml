@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="dialog_default_title">Thông báo!</string>
+    <string name="dialog_ok">OK</string>
+    <string name="dialog_cancel">Hủy</string>
+    <string name="button_yes">Có</string>
+    <string name="button_no">Không</string>
+    <string name="default_progressbar">Progressbar mặc định:</string>
+
+</resources>
+
