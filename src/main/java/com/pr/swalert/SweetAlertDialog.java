@@ -1,13 +1,17 @@
 package com.pr.swalert;
 
 
-import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
-import android.text.method.ScrollingMovementMethod;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewParent;
+import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
@@ -18,13 +22,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.StringRes;
+import androidx.appcompat.app.AppCompatDialog;
 
 import com.pr.swalert.toast.ToastUtils;
 
 import static com.pr.swalert.SweetAlertDialog.AlertType.ERROR;
 import static com.pr.swalert.SweetAlertDialog.AlertType.SUCCESS;
 
-public class SweetAlertDialog extends Dialog implements View.OnClickListener {
+public class SweetAlertDialog extends AppCompatDialog implements View.OnClickListener {
     private View mDialogView;
     private AnimationSet mModalInAnim;
     private AnimationSet mModalOutAnim;
@@ -65,14 +70,14 @@ public class SweetAlertDialog extends Dialog implements View.OnClickListener {
 
     private boolean isShowConfirmButton = true;
     //Thowif gian exit ms
-    private static int EXIT_TIMEOUT = 2000;
+    private static int EXIT_TIMEOUT = 3000;
 
     public static void setExitTimeout(int exitTimeout) {
         EXIT_TIMEOUT = exitTimeout;
     }
 
     public static int getExitTimeout() {
-        return EXIT_TIMEOUT;
+        return EXIT_TIMEOUT + 100; //+100 for smoother anim
     }
 
     public interface OnSweetClickListener {
@@ -136,13 +141,66 @@ public class SweetAlertDialog extends Dialog implements View.OnClickListener {
         mOverlayOutAnim.setDuration(120);
     }
 
+    protected void forceWrapContent(View v) {
+        // Start with the provided view
+        View current = v;
+
+        // Travel up the tree until fail, modifying the LayoutParams
+        do {
+            // Get the parent
+            ViewParent parent = current.getParent();
+
+            // Check if the parent exists
+            if (parent != null) {
+                // Get the view
+                try {
+                    current = (View) parent;
+                    ViewGroup.LayoutParams layoutParams = current.getLayoutParams();
+                    if (layoutParams instanceof FrameLayout.LayoutParams) {
+                        ((FrameLayout.LayoutParams) layoutParams).
+                                gravity = Gravity.CENTER_HORIZONTAL;
+                    } else if (layoutParams instanceof WindowManager.LayoutParams) {
+                        ((WindowManager.LayoutParams) layoutParams).
+                                gravity = Gravity.CENTER_HORIZONTAL;
+                    }
+                } catch (ClassCastException e) {
+                    // This will happen when at the top view, it cannot be cast to a View
+                    break;
+                }
+
+                // Modify the layout
+                if (current.getLayoutParams() != null)
+                    current.getLayoutParams().width = ViewGroup.LayoutParams.WRAP_CONTENT;
+            }
+        } while (current.getParent() != null);
+
+        // Request a layout to be re-done
+        current.requestLayout();
+    }
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+
+        Window window = getWindow();
+        if (window != null) {
+            window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+        }
         setContentView(R.layout.alert_dialog);
-        if (getWindow() != null)
-            mDialogView = getWindow().getDecorView().findViewById(android.R.id.content);
+
+        if (getWindow() != null) {
+            mDialogView = window.getDecorView().findViewById(android.R.id.content);
+            getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            getWindow().setLayout(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT);
+        }
+
+//        forceWrapContent(mDialogView);
         mTitleTextView = findViewById(R.id.title_text);
-        mTitleTextView.setMovementMethod(new ScrollingMovementMethod());
+//        mTitleTextView.setMovementMethod(new ScrollingMovementMethod());
         mContentTextView = findViewById(R.id.content_text);
         mErrorFrame = findViewById(R.id.error_frame);
         mErrorX = mErrorFrame.findViewById(R.id.error_x);
@@ -365,9 +423,10 @@ public class SweetAlertDialog extends Dialog implements View.OnClickListener {
 
     @Override
     public void show() {
-
+        setCanceledOnTouchOutside(true);
+        if (isShowing()) return;
         super.show();
-        if (!isShowConfirmButton) {
+        if (!isShowConfirmButton && !isShowCancelButton()) {
             new Handler().postDelayed(() -> mConfirmButton.performClick(), EXIT_TIMEOUT);
         }
     }
@@ -389,7 +448,7 @@ public class SweetAlertDialog extends Dialog implements View.OnClickListener {
     /**
      * The real Dialog.dismiss() will be invoked async-ly after the animation finishes.
      */
-    private void dismissWithAnimation() {
+    public void dismissWithAnimation() {
         dismissWithAnimation(false);
     }
 

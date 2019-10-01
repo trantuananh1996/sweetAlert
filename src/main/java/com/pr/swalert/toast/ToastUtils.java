@@ -2,6 +2,7 @@ package com.pr.swalert.toast;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.Looper;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
@@ -10,9 +11,10 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 
-import com.pr.swalert.BuildConfig;
 import com.pr.swalert.R;
 import com.pr.swalert.SweetAlertDialog;
+
+import es.dmoral.toasty.Toasty;
 
 import static com.pr.swalert.SweetAlertDialog.AlertType.CUSTOM_IMAGE;
 import static com.pr.swalert.SweetAlertDialog.AlertType.ERROR;
@@ -34,12 +36,13 @@ public class ToastUtils {
 
     public static void logException(Throwable e) {
         if (e == null) return;
-        if (BuildConfig.DEBUG) Log.e("Error", "Message" + e.getMessage());
+//        if (BuildConfig.DEBUG)
+        Log.e("Error", "Message" + e.getMessage());
         //TODO: CrashLytics.logException
     }
 
     public static void alertYesNo(@Nullable Activity activity, @StringRes int message, AlertListener listener) {
-        if (activity == null|| activity.isFinishing()) return;
+        if (activity == null || activity.isFinishing()) return;
         alertYesNo(activity, activity.getResources().getString(message), listener);
     }
 
@@ -255,7 +258,8 @@ public class ToastUtils {
             toast.setView(customToastNotification);
             toast.show();
         } catch (Exception e) {
-            Toast.makeText(context, content, Toast.LENGTH_SHORT).show();
+            if (Looper.myLooper() == null) Looper.prepare();
+            Toasty.normal(context, content, SweetAlertDialog.getExitTimeout()).show();
         }
     }
 

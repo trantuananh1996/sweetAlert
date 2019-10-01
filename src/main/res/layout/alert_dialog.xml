@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:wheel="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_gravity="center"
+    android:layout_margin="10dp"
     android:background="@drawable/dialog_background"
     android:gravity="center"
     android:minWidth="@dimen/alert_width"
@@ -18,14 +20,20 @@
         android:layout_marginTop="5dp"
         android:contentDescription="@string/app_name"
         android:scaleType="fitCenter"
-        android:visibility="gone" />
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <FrameLayout
         android:id="@+id/error_frame"
         android:layout_width="53dp"
         android:layout_height="53dp"
         android:layout_marginTop="5dp"
-        android:visibility="gone">
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/custom_image">
 
         <View
             android:layout_width="match_parent"
@@ -47,7 +55,10 @@
         android:layout_width="53dp"
         android:layout_height="53dp"
         android:layout_marginTop="5dp"
-        android:visibility="gone">
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/error_frame">
 
         <View
             android:layout_width="match_parent"
@@ -88,7 +99,10 @@
         android:layout_width="53dp"
         android:layout_height="53dp"
         android:layout_marginTop="5dp"
-        android:visibility="gone">
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/success_frame">
 
         <View
             android:layout_width="match_parent"
@@ -110,7 +124,10 @@
         android:layout_gravity="center"
         android:layout_marginTop="9dp"
         android:orientation="vertical"
-        android:visibility="gone">
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/warning_frame">
 
         <com.pr.swalert.ProgressWheel
             android:id="@+id/progressWheel"
@@ -122,53 +139,68 @@
 
     <TextView
         android:id="@+id/title_text"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:scrollbars="vertical"
-        android:text="@string/dialog_default_title"
+        android:gravity="center"
+        tools:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
         android:textColor="#575757"
-        android:textSize="19sp" />
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/progress_dialog" />
 
     <TextView
         android:id="@+id/content_text"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:gravity="center"
         android:textAlignment="center"
         android:textColor="#797979"
         android:textSize="14sp"
-        android:visibility="gone" />
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title_text" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:gravity="center">
-        <!--TODO Sử dụng AppCompat-->
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/content_text">
+
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/cancel_button"
             style="@style/dialog_blue_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginEnd="10dp"
             android:layout_marginRight="10dp"
+            android:background="@drawable/gray_button_background"
+            android:lines="1"
+            android:minHeight="30dp"
+            android:text="@string/dialog_cancel"
+            android:visibility="gone"
             app:autoSizeMaxTextSize="14sp"
             app:autoSizeMinTextSize="10sp"
             app:autoSizeStepGranularity="1sp"
-            app:autoSizeTextType="uniform"
-            android:background="@drawable/gray_button_background"
-            android:lines="1"
-            android:text="@string/dialog_cancel"
-            android:visibility="gone" />
+            app:autoSizeTextType="uniform" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/confirm_button"
             style="@style/dialog_blue_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:lines="1"
+            android:minHeight="30dp"
+            android:text="@string/dialog_ok"
             app:autoSizeMaxTextSize="14sp"
             app:autoSizeMinTextSize="10sp"
             app:autoSizeStepGranularity="1sp"
-            app:autoSizeTextType="uniform"
-            android:lines="1"
-            android:text="@string/dialog_ok" />
+            app:autoSizeTextType="uniform" />
     </LinearLayout>
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
