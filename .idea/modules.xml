@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/alertDialog/alertDialog.iml" filepath="$PROJECT_DIR$/alertDialog/alertDialog.iml" group="sweetAlert/alertDialog" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="sweetAlert/app" />
+      <module fileurl="file://$PROJECT_DIR$/sweetAlert.iml" filepath="$PROJECT_DIR$/sweetAlert.iml" group="sweetAlert" />
+    </modules>
+  </component>
+</project>
