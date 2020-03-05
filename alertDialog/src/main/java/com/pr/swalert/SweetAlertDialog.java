@@ -2,6 +2,7 @@ package com.pr.swalert;
 
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -65,7 +66,12 @@ public class SweetAlertDialog extends AppCompatDialog implements View.OnClickLis
     private boolean mCloseFromCancel;
 
     public enum AlertType {
-        NORMAL, ERROR, SUCCESS, WARNING, CUSTOM_IMAGE, PROGRESS
+        NORMAL,
+        ERROR,
+        SUCCESS,
+        WARNING,
+        CUSTOM_IMAGE,
+        PROGRESS
     }
 
     private boolean isShowConfirmButton = true;
@@ -225,6 +231,11 @@ public class SweetAlertDialog extends AppCompatDialog implements View.OnClickLis
         setCancelText(mCancelText);
         setConfirmText(mConfirmText);
         changeAlertType(mAlertType, true);
+        setOnDismissListener(dialogInterface -> {
+            if (mCancelClickListener != null) {
+                mCancelClickListener.onClick(SweetAlertDialog.this);
+            }
+        });
 
     }
 
