@@ -1,7 +1,9 @@
 package com.pr.swalert.toast;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Looper;
 import android.text.TextUtils;
 import android.util.Log;
@@ -50,7 +52,7 @@ public class ToastUtils {
         if (activity == null || activity.isFinishing()) return;
         try {
             if (!message.trim().endsWith("?")) message = message + "?";
-            new SweetAlertDialog(activity, CUSTOM_IMAGE)
+            Dialog dialog = new SweetAlertDialog(activity, CUSTOM_IMAGE)
                     .setTitleText(message)
                     .setCustomImage(null)
                     .showCancelButton(true)
@@ -59,13 +61,16 @@ public class ToastUtils {
                     .setConfirmText(R.string.button_yes)
                     .setConfirmClickListener(sweetAlertDialog -> {
                         listener.onAlertConfirmed(true);
+                        sweetAlertDialog.setOnDismissListener(null);
                         sweetAlertDialog.dismiss();
                     })
                     .setCancelClickListener(sweetAlertDialog -> {
                         listener.onAlertConfirmed(false);
+                        sweetAlertDialog.setOnDismissListener(null);
                         sweetAlertDialog.dismiss();
-                    })
-                    .show();
+                    });
+            dialog.setOnDismissListener(dialogInterface -> listener.onAlertConfirmed(false));
+            dialog.show();
         } catch (Exception e) {
             ToastUtils.logException(e);
         }

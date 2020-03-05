@@ -231,11 +231,6 @@ public class SweetAlertDialog extends AppCompatDialog implements View.OnClickLis
         setCancelText(mCancelText);
         setConfirmText(mConfirmText);
         changeAlertType(mAlertType, true);
-        setOnDismissListener(dialogInterface -> {
-            if (mCancelClickListener != null) {
-                mCancelClickListener.onClick(SweetAlertDialog.this);
-            }
-        });
 
     }
 
