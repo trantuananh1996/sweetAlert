@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="dialog_default_title">ນີ້ແມ່ນຂໍ້ຄວາມ!</string>
+    <string name="dialog_ok">ຖືກແລ້ວ</string>
+    <string name="dialog_cancel">ຢົກເລີກ</string>
+    <string name="button_yes">ແມ່ນແລ້ວ</string>
+    <string name="button_no">ໄປ່</string>
+    <string name="default_progressbar">ແຖບຄວາມຄືບໜ້າເລີ່ມຕົ້ນ:</string>
+</resources>
