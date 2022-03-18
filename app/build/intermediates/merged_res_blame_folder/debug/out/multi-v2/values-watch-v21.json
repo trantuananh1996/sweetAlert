@@ -1,0 +1,20 @@
+{
+    "logs": [
+        {
+            "outputFile": "/Volumes/Data/OMT/Lib/sweetAlert/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-watch-v21/values-watch-v21.xml",
+            "map": [
+                {
+                    "source": "/Users/trungnk/.gradle/caches/transforms-3/e2baed6f7d23c75482083e00963e6a92/transformed/appcompat-1.1.0/res/values-watch-v21/values-watch-v21.xml",
+                    "from": {
+                        "startLines": "2,6,10",
+                        "startColumns": "4,4,4",
+                        "startOffsets": "55,271,499",
+                        "endLines": "5,9,13",
+                        "endColumns": "12,12,12",
+                        "endOffsets": "266,494,724"
+                    }
+                }
+            ]
+        }
+    ]
+}

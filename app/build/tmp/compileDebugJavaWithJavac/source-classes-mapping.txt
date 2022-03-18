@@ -1,0 +1,4 @@
+com/pr/sweetalert/MainActivity.java
+ com.pr.sweetalert.MainActivity
+com/pr/sweetalert/BuildConfig.java
+ com.pr.sweetalert.BuildConfig

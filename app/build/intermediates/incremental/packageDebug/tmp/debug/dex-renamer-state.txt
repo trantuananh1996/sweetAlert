@@ -1,0 +1,4 @@
+#Fri Mar 18 17:15:28 ICT 2022
+base.0=/Volumes/Data/OMT/Lib/sweetAlert/app/build/intermediates/dex/debug/mergeDexDebug/classes.dex
+renamed.0=classes.dex
+path.0=classes.dex
