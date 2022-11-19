@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="dialog_default_title">Ini pesannya!</string>
+    <string name="dialog_ok">Oke</string>
+    <string name="dialog_cancel">Membatalkan</string>
+    <string name="button_yes">Ya</string>
+    <string name="button_no">Tidak</string>
+    <string name="default_progressbar">Default Progressbar:</string>
+</resources>
