@@ -2,12 +2,13 @@ package com.pr.swalert;
 
 
 import android.content.Context;
-import android.content.DialogInterface;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,8 +23,10 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatDialog;
+import androidx.core.widget.TextViewCompat;
 
 import com.pr.swalert.toast.ToastUtils;
 
@@ -45,6 +48,7 @@ public class SweetAlertDialog extends AppCompatDialog implements View.OnClickLis
     private String mContentText;
     private boolean mShowCancel;
     private boolean mShowContent;
+    private boolean useBigButton = false;
     private String mCancelText;
     private String mConfirmText;
     private AlertType mAlertType;
@@ -184,6 +188,11 @@ public class SweetAlertDialog extends AppCompatDialog implements View.OnClickLis
         current.requestLayout();
     }
 
+    private static int dpToPx(@NonNull Context context, float dp) {
+        Resources res = context.getResources();
+        return (int) (dp * (res.getDisplayMetrics().densityDpi / 160f));
+    }
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -222,10 +231,23 @@ public class SweetAlertDialog extends AppCompatDialog implements View.OnClickLis
         mProgressHelper.setProgressWheel(findViewById(R.id.progressWheel));
         mConfirmButton.setOnClickListener(this);
         mCancelButton.setOnClickListener(this);
+
         if (isShowConfirmButton) mConfirmButton.setVisibility(View.VISIBLE);
         else mConfirmButton.setVisibility(View.GONE);
         if (mShowCancel) mCancelButton.setVisibility(View.VISIBLE);
         else mCancelButton.setVisibility(View.GONE);
+        if (useBigButton) {
+            mConfirmButton.setMinimumHeight(dpToPx(mConfirmButton.getContext(), 50));
+            mConfirmButton.setMinimumWidth(dpToPx(mConfirmButton.getContext(), 100));
+            TextViewCompat.setAutoSizeTextTypeUniformWithConfiguration(mConfirmButton, 10, 20, 1, TypedValue.COMPLEX_UNIT_SP);
+
+            mCancelButton.setMinimumHeight(dpToPx(mCancelButton.getContext(), 50));
+            mCancelButton.setMinimumWidth(dpToPx(mCancelButton.getContext(), 100));
+            TextViewCompat.setAutoSizeTextTypeUniformWithConfiguration(mCancelButton, 10, 20, 1, TypedValue.COMPLEX_UNIT_SP);
+
+
+        }
+
         setTitleText(mTitleText);
         setContentText(mContentText);
         setCancelText(mCancelText);
@@ -316,6 +338,11 @@ public class SweetAlertDialog extends AppCompatDialog implements View.OnClickLis
         if (mTitleTextView != null && mTitleText != null) {
             mTitleTextView.setText(mTitleText);
         }
+        return this;
+    }
+
+    public SweetAlertDialog setUseBigButton(boolean useBigButton) {
+        this.useBigButton = useBigButton;
         return this;
     }
 

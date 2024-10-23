@@ -59,6 +59,7 @@ public class ToastUtils {
                     .showConfirmButton(true)
                     .setCancelText(R.string.button_no)
                     .setConfirmText(R.string.button_yes)
+                    .setUseBigButton(true)
                     .setConfirmClickListener(sweetAlertDialog -> {
                         listener.onAlertConfirmed(true);
                         sweetAlertDialog.setOnDismissListener(null);
